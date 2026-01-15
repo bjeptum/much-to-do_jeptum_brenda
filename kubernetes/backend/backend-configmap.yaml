@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-configmap
+data:
+  mongo-host: mongodb-service
+  mongo-port: "27017"
+  mongo-username: root
+  mongo-database: muchtodo
+  port: "8080"
