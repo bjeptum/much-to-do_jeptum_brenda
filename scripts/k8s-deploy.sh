@@ -21,11 +21,6 @@ kubectl wait --namespace ingress-nginx \
 echo "=== Creating muchtodo namespace ==="
 kubectl apply -f kubernetes/namespace.yaml
 
-echo "=== Creating MongoDB ConfigMap ==="
-kubectl create configmap mongodb-configmap \
-  --from-literal=database_name=muchtodo \
-  -n muchtodo --dry-run=client -o yaml | kubectl apply -f -
-
 echo "=== Deploying MongoDB ==="
 kubectl apply -f kubernetes/mongodb/ -n muchtodo
 
