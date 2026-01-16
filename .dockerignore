@@ -1,0 +1,20 @@
+# Ignore Git files
+.git
+.gitignore
+
+# Ignore build artifacts
+bin/
+*.exe
+Server/bin/  # If compiled binaries are in Server
+
+# Ignore temporary files
+tmp/
+*.tmp
+*.log
+
+# Ignore docs and extra folders not needed in image
+README.md
+LICENSE
+evidence/
+kubernetes/
+scripts/
