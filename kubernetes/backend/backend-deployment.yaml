@@ -15,39 +15,35 @@ spec:
       containers:
         - name: backend
           image: muchtodo-backend:latest
+          imagePullPolicy: Never
           ports:
             - containerPort: 8080
           env:
-            - name: MONGO_HOST
+            - name: MONGO_URI
               valueFrom:
                 configMapKeyRef:
                   name: backend-configmap
-                  key: mongo-host
-            - name: MONGO_PORT
+                  key: MONGO_URI
+            - name: DB_NAME
               valueFrom:
                 configMapKeyRef:
                   name: backend-configmap
-                  key: mongo-port
-            - name: MONGO_USER
-              valueFrom:
-                configMapKeyRef:
-                  name: backend-configmap
-                  key: mongo-username
-            - name: MONGO_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: backend-secret
-                  key: mongo-password
-            - name: MONGO_DB
-              valueFrom:
-                configMapKeyRef:
-                  name: backend-configmap
-                  key: mongo-database
+                  key: DB_NAME
             - name: PORT
               valueFrom:
                 configMapKeyRef:
                   name: backend-configmap
-                  key: port
+                  key: PORT
+            - name: JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret
+                  key: JWT_SECRET_KEY
+            - name: JWT_EXPIRATION_HOURS
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-configmap
+                  key: JWT_EXPIRATION_HOURS
           resources:
             requests:
               memory: "128Mi"

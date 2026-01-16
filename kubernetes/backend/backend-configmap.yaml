@@ -3,8 +3,7 @@ kind: ConfigMap
 metadata:
   name: backend-configmap
 data:
-  mongo-host: mongodb-service
-  mongo-port: "27017"
-  mongo-username: root
-  mongo-database: muchtodo
-  port: "8080"
+  MONGO_URI: "mongodb://root:lakwet123@mongodb-service:27017/muchtodo?authSource=admin"
+  DB_NAME: muchtodo
+  PORT: "8080"
+  JWT_EXPIRATION_HOURS: "72"

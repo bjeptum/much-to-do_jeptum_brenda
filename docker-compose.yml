@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   mongo:
@@ -14,10 +14,11 @@ services:
     networks:
       - app-network
     healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongo mongodb://localhost:27017/test --quiet
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')", "--quiet"]
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 30s
 
   backend:
     build:
@@ -26,9 +27,11 @@ services:
     container_name: muchtodo-backend
     restart: always
     environment:
-      # Adjust based on your app's code (check Server/ for os.Getenv calls)
-      MONGO_URI: mongodb://root:lakwet123@mongo:27017/muchtodo?authSource=admin
-      PORT: 8080  # If app reads PORT env
+      MONGO_URI: "mongodb://root:lakwet123@mongo:27017/muchtodo?authSource=admin"
+      DB_NAME: muchtodo
+      PORT: 8080
+      JWT_SECRET_KEY: your-super-secret-jwt-key-change-in-production
+      JWT_EXPIRATION_HOURS: 72
     ports:
       - "8080:8080"
     depends_on:

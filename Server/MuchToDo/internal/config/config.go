@@ -26,6 +26,18 @@ func LoadConfig(path string) (config Config, err error) {
 
 	viper.AutomaticEnv()
 
+	// Explicitly bind environment variables to config keys
+	viper.BindEnv("PORT")
+	viper.BindEnv("MONGO_URI")
+	viper.BindEnv("DB_NAME")
+	viper.BindEnv("JWT_SECRET_KEY")
+	viper.BindEnv("JWT_EXPIRATION_HOURS")
+	viper.BindEnv("ENABLE_CACHE")
+	viper.BindEnv("REDIS_ADDR")
+	viper.BindEnv("REDIS_PASSWORD")
+	viper.BindEnv("LOG_LEVEL")
+	viper.BindEnv("LOG_FORMAT")
+
 	// Set default values
 	viper.SetDefault("PORT", "8080")
 	viper.SetDefault("ENABLE_CACHE", false)
@@ -36,6 +48,8 @@ func LoadConfig(path string) (config Config, err error) {
 		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
 			return
 		}
+		// Config file not found is okay, we'll use env vars
+		err = nil
 	}
 
 	err = viper.Unmarshal(&config)
